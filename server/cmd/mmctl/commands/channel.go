@@ -375,8 +375,10 @@ func unarchiveChannelsCmdF(c client.Client, cmd *cobra.Command, args []string) e
 			printer.PrintError("Unable to find channel '" + args[i] + "'")
 			continue
 		}
-		if _, _, err := c.RestoreChannel(context.TODO(), channel.Id); err != nil {
+		_, _, err := c.RestoreChannel(context.TODO(), channel.Id)
+		if err != nil {
 			printer.PrintError("Unable to unarchive channel '" + args[i] + "'. Error: " + err.Error())
+			return err
 		}
 	}
 
